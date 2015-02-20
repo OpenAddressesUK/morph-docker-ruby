@@ -47,5 +47,11 @@ RUN /bin/bash -l -c 'bundle install --gemfile /etc/Gemfile'
 RUN /bin/bash -l -c 'rm /etc/Gemfile.lock'
 RUN /bin/bash -l -c 'bundle install --gemfile /etc/Gemfile'
 
+RUN mkdir /tmp/build
+RUN git clone https://github.com/OpenAddressesUK/turbot-runner /tmp/build/turbot-runner
+RUN cd /tmp/build/turbot-runner && /bin/bash -l -c 'gem build turbot-runner.gemspec ; gem install `ls *gem`'
+
+RUN git clone https://github.com/OpenAddressesUK/openc-schema /tmp/build/openc-schema
+RUN cd /tmp/build/openc-schema && /bin/bash -l -c 'gem build openc-schema.gemspec ; gem install `ls *gem`'
 
 VOLUME /output
